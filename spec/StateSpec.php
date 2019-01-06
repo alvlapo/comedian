@@ -69,12 +69,12 @@ class StateSpec extends ObjectBehavior
 
     function it_should_add_event_with_callable_return_value()
     {
-        $this->event('publish', function () { return true; })->shouldReturnAnInstanceOf(State::class);
+        $this->event('publish', function ($machine) { return true; })->shouldReturnAnInstanceOf(State::class);
         $this->publish()->shouldBeCallable();
     }
 
     function it_should_add_trigger()
     {
-        $this->trigger('onExit', function () { return true; })->shouldReturnAnInstanceOf(State::class);
+        $this->trigger('onExit', function ($machine) { return true; })->shouldReturnAnInstanceOf(State::class);
     }
 }

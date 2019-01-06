@@ -17,7 +17,7 @@ class StateMachineSpec extends ObjectBehavior
 {
     function let(StateContext $context, StateSet $states)
     {
-        $states->add(
+        $states->append(
             State::initial('draft')
                 ->event('submit', 'submitted')
                 ->event('self', 'draft') // not allowed
