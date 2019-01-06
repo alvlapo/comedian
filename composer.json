@@ -1,0 +1,13 @@
+{
+    "name": "alvlapo/comedian",
+    "description": "Finite state machine",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandr Polyakov",
+            "email": "alvlapo@gmail.com"
+        }
+    ],
+    "require": {}
+}
