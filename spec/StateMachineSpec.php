@@ -8,7 +8,7 @@ use Rotoscoping\Comedian\Error\ExecutionError;
 use Rotoscoping\Comedian\Context\StateContext;
 use Rotoscoping\Comedian\State\StateSet;
 use Rotoscoping\Comedian\Param\Output;
-use Rotoscoping\Comedian\State\Factory as StateFactory;
+use Rotoscoping\Comedian\State;
 use Rotoscoping\Comedian\Operation\Factory as OperationFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -18,19 +18,19 @@ class StateMachineSpec extends ObjectBehavior
     function let(StateContext $context, StateSet $states)
     {
         $states->add(
-            StateFactory::start('draft')
+            State::initial('draft')
                 ->event('submit', 'submitted')
                 ->event('self', 'draft') // not allowed
                 ->event('unknown', function () { return OperationFactory::apply('foobar');}), // unknown state
-            StateFactory::normal('submitted')
+            State::normal('submitted')
                 ->event('reject', 'rejected')
                 ->event('approve', 'processing'),
-            StateFactory::normal('processing')
+            State::normal('processing')
                 ->event('process', 'processing') // self transition
                 ->event('close', 'closed'),
-            StateFactory::finish('rejected')
+            State::finish('rejected')
                 ->event('self', 'close'), // not allowed
-            StateFactory::finish('closed')
+            State::finish('closed')
         );
 
         $this->beConstructedWith('specName', $context, $states);
