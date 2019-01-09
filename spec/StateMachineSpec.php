@@ -5,7 +5,7 @@ namespace spec\Rotoscoping\Comedian;
 use Rotoscoping\Comedian\StateMachine;
 use Rotoscoping\Comedian\Result\OperationResult;
 use Rotoscoping\Comedian\Error\ExecutionError;
-use Rotoscoping\Comedian\Context\StateContext;
+use Rotoscoping\Comedian\Context\SimpleContext;
 use Rotoscoping\Comedian\State\StateSet;
 use Rotoscoping\Comedian\Param\Output;
 use Rotoscoping\Comedian\State;
@@ -15,7 +15,7 @@ use Prophecy\Argument;
 
 class StateMachineSpec extends ObjectBehavior
 {
-    function let(StateContext $context, StateSet $states)
+    function let(SimpleContext $context, StateSet $states)
     {
         $states->append(
             State::initial('draft')
@@ -32,6 +32,8 @@ class StateMachineSpec extends ObjectBehavior
                 ->event('self', 'close'), // not allowed
             State::finish('closed')
         );
+
+        $context->addProperty('owner', 'username');
 
         $this->beConstructedWith('specName', $context, $states);
     }
@@ -79,5 +81,22 @@ class StateMachineSpec extends ObjectBehavior
     function it_should_not_allow_transition_to_unknown_state()
     {
         $this->shouldThrow(ExecutionError::class)->during('unknown');
+    }
+
+    function it_should_get_properties_from_context()
+    {
+        $this->owner->shouldReturn('username');
+    }
+
+    function it_should_change_properties_to_context()
+    {
+        $this->owner = 'unknown';
+        $this->owner->shouldReturn('unknown');
+    }
+
+    function it_should_add_properties_to_context()
+    {
+        $this->group = 'admins';
+        $this->group->shouldReturn('admins');
     }
 }
