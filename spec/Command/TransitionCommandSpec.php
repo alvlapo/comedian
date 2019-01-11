@@ -24,14 +24,14 @@ class TransitionCommandSpec extends ObjectBehavior
         $this->getStateTo()->shouldBeString();
     }
 
-    function it_is_runnable(StateMachine $machine, State $state)
+    function it_is_runnable(StateMachine $machine, SimpleState $state)
     {
         $this->run($machine, $state)->shouldReturnAnInstanceOf(Result::class);
     }
 
     function it_should_not_allow_transition_to_missing_state(StateMachine $machine)
     {
-        $stateSet = new StateSet(State::initial('stateA'), State::final('stateB'));
+        $stateSet = new StateSet(SimpleState::initial('stateA'), SimpleState::final('stateB'));
         $machine->getStates()->shouldBeCalled()->willReturn($stateSet);
 
         $this->beConstructedWith('stateC');

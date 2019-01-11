@@ -18,19 +18,19 @@ class StateMachineSpec extends ObjectBehavior
     function let(SimpleContext $context, StateSet $states)
     {
         $states->append(
-            State::initial('draft')
+            SimpleState::initial('draft')
                 ->event('submit', 'submitted')
                 ->event('self', 'draft') // not allowed
                 ->event('unknown', function () { return OperationFactory::apply('foobar');}), // unknown state
-            State::normal('submitted')
+            SimpleState::normal('submitted')
                 ->event('reject', 'rejected')
                 ->event('approve', 'processing'),
-            State::normal('processing')
+            SimpleState::normal('processing')
                 ->event('process', 'processing') // self transition
                 ->event('close', 'closed'),
-            State::finish('rejected')
+            SimpleState::finish('rejected')
                 ->event('self', 'close'), // not allowed
-            State::finish('closed')
+            SimpleState::finish('closed')
         );
 
         $context->addProperty('owner', 'username');
@@ -60,7 +60,7 @@ class StateMachineSpec extends ObjectBehavior
 
     function it_should_execute_event_from_state()
     {
-        $this->submit()->shouldReturnAnInstanceOf(Output::class);
+        $this->submit()->shouldReturnAnInstanceOf(CommandResult::class);
     }
 
     function it_should_not_allow_call_unknown_state_handler()
@@ -72,8 +72,8 @@ class StateMachineSpec extends ObjectBehavior
     {
         $this->shouldThrow(ExecutionError::class)->during('self');
 
-        $this->submit()->shouldBeAnInstanceOf(Output::class);
-        $this->reject()->shouldBeAnInstanceOf(Output::class);
+        $this->submit()->shouldBeAnInstanceOf(CommandResult::class);
+        $this->reject()->shouldBeAnInstanceOf(CommandResult::class);
 
         $this->shouldThrow(ExecutionError::class)->during('self');
     }

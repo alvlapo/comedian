@@ -7,11 +7,11 @@ use Rotoscoping\Comedian\State\StateInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class StateSpec extends ObjectBehavior
+class SimpleStateSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('name', State::NORMAL);
+        $this->beConstructedWith('name', SimpleState::NORMAL);
     }
 
     function it_is_initializable()

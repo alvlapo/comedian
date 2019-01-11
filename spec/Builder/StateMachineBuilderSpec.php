@@ -29,10 +29,10 @@ class StateMachineBuilderSpec extends ObjectBehavior
             ->beConstructedWith('Rotoscoping\Comedian\NotExists');
     }
 
-    function it_should_add_state(State $state)
+    function it_should_add_state(SimpleState $state)
     {
         $state->getName()->shouldBeCalled()->willReturn('state');
-        $state->getType()->shouldBeCalled()->willReturn(State::INITIAL);
+        $state->getType()->shouldBeCalled()->willReturn(SimpleState::INITIAL);
 
         $this->addState($state)->shouldReturnAnInstanceOf(StateMachineBuilder::class);
     }

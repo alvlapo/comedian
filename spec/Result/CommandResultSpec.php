@@ -44,7 +44,7 @@ class CommandResultSpec extends ObjectBehavior
 
     function it_should_get_state()
     {
-        $this->getState()->shouldReturnAnInstanceOf(State::class);
+        $this->getState()->shouldReturnAnInstanceOf(StateInterface::class);
     }
 
     function it_should_get_command()
