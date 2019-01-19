@@ -9,5 +9,16 @@
             "email": "alvlapo@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpspec/phpspec": "^4.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Rotoscoping\\Comedian\\" : "src/"
+        }
+    }
 }
