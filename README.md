@@ -1,5 +1,7 @@
 # COMEDIAN 
 
+[![Build Status](https://travis-ci.org/alvlapo/comedian.svg?branch=master)](https://travis-ci.org/alvlapo/comedian)
+
 A finite state machine for php
 
 ## Requirements and installation
