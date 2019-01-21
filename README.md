@@ -6,7 +6,7 @@ A finite state machine for php
 
 ## Requirements and installation
 
-- PHP 7.0+
+- PHP 7.1+
 
 ## Usage
 

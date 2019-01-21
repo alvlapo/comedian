@@ -9,9 +9,11 @@
             "email": "alvlapo@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": "^7.1"
+    },
     "require-dev": {
-        "phpspec/phpspec": "^4.0"
+        "phpspec/phpspec": "^5.1"
     },
     "config": {
         "bin-dir": "bin"
