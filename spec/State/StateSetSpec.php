@@ -2,59 +2,37 @@
 
 namespace spec\Rotoscoping\Comedian\State;
 
-use Rotoscoping\Comedian\State\StateSet;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use Rotoscoping\Comedian\State\NormalState;
+use Rotoscoping\Comedian\State\StateInterface;
+use Rotoscoping\Comedian\State\StateSet;
 
 class StateSetSpec extends ObjectBehavior
 {
     function let()
     {
         $this->beConstructedWith(
-            SimpleState::normal('stateA'),
-            SimpleState::normal('stateB')
+            new NormalState('stateA'),
+            new NormalState('stateB')
         );
     }
 
     function it_is_initializable()
     {
         $this->shouldHaveType(StateSet::class);
+    }
+
+    function it_is_a_countable()
+    {
         $this->shouldImplement(\Countable::class);
     }
 
-    function it_should_add_only_status_objects()
-    {
-        $this->shouldThrow(InvalidStructure::class)->during('append', ['state']);
-    }
-
-    function it_should_not_allow_add_more_than_one_initial_state(SimpleState $state)
+    function it_should_add_state(StateInterface $state)
     {
         $state->getName()->shouldBeCalled()->willReturn('stateC');
-        $state->getType()->shouldBeCalled()->willReturn(SimpleState::INITIAL);
+        $state->getType()->shouldBeCalled()->willReturn(StateInterface::INITIAL_STATE);
 
-        $this->append($state);
-
-        $this->shouldThrow(InvalidStructure::class)->during('append', [$state]);
-    }
-
-    function it_should_not_validate_without_at_least_one_final_state()
-    {
-        $this->validate()->shouldBeBoolean();
-        $this->validate()->shouldReturn(false);
-    }
-
-    function it_should_not_validate_without_an_initial_state()
-    {
-        $this->validate()->shouldBeBoolean();
-        $this->validate()->shouldReturn(false);
-    }
-
-    function it_should_append_state(SimpleState $state)
-    {
-        $state->getName()->shouldBeCalled()->willReturn('stateC');
-        $state->getType()->shouldBeCalled()->willReturn(SimpleState::INITIAL);
-
-        $this->append($state)->shouldReturnAnInstanceOf(StateSet::class);
+        $this->add($state)->shouldReturnAnInstanceOf(StateSet::class);
         $this->count()->shouldReturn(3);
     }
 
@@ -64,19 +42,19 @@ class StateSetSpec extends ObjectBehavior
         $this->count()->shouldReturn(1);
     }
 
-    function it_should_get_initial_status(SimpleState $state)
+    function it_should_get_initial_status(StateInterface $state)
     {
         $state->getName()->shouldBeCalled()->willReturn('stateC');
-        $state->getType()->shouldBeCalled()->willReturn(SimpleState::INITIAL);
+        $state->getType()->shouldBeCalled()->willReturn(StateInterface::INITIAL_STATE);
 
-        $this->append($state);
+        $this->add($state);
 
-        $this->getInitial()->shouldReturn($state);
+        $this->getInitial()->shouldContain($state);
     }
 
     function it_should_check_for_the_initial_status()
     {
-        $this->hasInitial()->shouldBeBoolean();
+        $this->hasInitial()->shouldBe(false);
     }
 
     function it_should_return_null_when_the_initial_status_is_not_defined()
@@ -84,19 +62,19 @@ class StateSetSpec extends ObjectBehavior
         $this->getInitial()->shouldBeNull();
     }
 
-    function it_should_get_final_status(SimpleState $state)
+    function it_should_get_final_status(StateInterface $state)
     {
         $state->getName()->shouldBeCalled()->willReturn('stateD');
-        $state->getType()->shouldBeCalled()->willReturn(SimpleState::FINAL);
+        $state->getType()->shouldBeCalled()->willReturn(StateInterface::FINAL_STATE);
 
         $this->add($state);
 
-        $this->getFinal()->shouldReturn($state);
+        $this->getFinal()->shouldContain($state);
     }
 
     function it_should_check_for_the_final_status()
     {
-        $this->hasFinal()->shouldBeBoolean();
+        $this->hasFinal()->shouldBe(false);
     }
 
     function it_should_return_null_when_the_final_status_is_not_defined()
@@ -106,7 +84,7 @@ class StateSetSpec extends ObjectBehavior
 
     function it_should_check_for_the_normal_status()
     {
-        $this->hasNormal()->shouldBeBoolean();
+        $this->hasNormal()->shouldBe(true);
     }
 
     function it_should_return_null_when_the_normal_status_is_not_defined()
@@ -123,13 +101,13 @@ class StateSetSpec extends ObjectBehavior
 
     function it_should_get_status_by_name()
     {
-        $this->get('stateA')->shouldReturnAnInstanceOf(SimpleState::class);
+        $this->get('stateA')->shouldReturnAnInstanceOf(StateInterface::class);
         $this->get('stateM')->shouldBeNull();
     }
 
     function it_should_check_for_the_status()
     {
-        $this->has('stateA')->shouldBeBoolean();
-        $this->has('stateM')->shouldBeBoolean();
+        $this->has('stateA')->shouldBe(true);
+        $this->has('stateM')->shouldBe(false);
     }
 }

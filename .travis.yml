@@ -10,4 +10,4 @@ before_script:
   - composer install --prefer-source --no-interaction
 
 script:
-  - bin/phpspec run -v --no-interaction
+  - bin/phpspec run spec/State -v --no-interaction
