@@ -6,6 +6,9 @@ use Rotoscoping\Comedian\Result\CommandResult;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @require Rotoscoping\Comedian\Result\CommandResult
+ */
 class CommandResultSpec extends ObjectBehavior
 {
     function it_is_initializable()

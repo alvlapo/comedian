@@ -6,6 +6,9 @@ use Rotoscoping\Comedian\Command\TransitionCommand;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @require Rotoscoping\Comedian\Command\TransitionCommand
+ */
 class TransitionCommandSpec extends ObjectBehavior
 {
     function let()

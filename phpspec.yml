@@ -3,3 +3,5 @@ suites:
     namespace: Rotoscoping\Comedian
     psr4_prefix: Rotoscoping\Comedian
     src_path : src
+extensions:
+  Akeneo\SkipExampleExtension: ~

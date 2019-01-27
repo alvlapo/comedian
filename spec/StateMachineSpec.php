@@ -13,6 +13,9 @@ use Rotoscoping\Comedian\Operation\Factory as OperationFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @require Rotoscoping\Comedian\StateMachine
+ */
 class StateMachineSpec extends ObjectBehavior
 {
     function let(SimpleContext $context, StateSet $states)

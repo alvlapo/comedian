@@ -1,12 +1,66 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2b7cbe8eb3f1f705f159143424b53bf",
+    "content-hash": "f38bbd752be4be985986735372674e43",
     "packages": [],
     "packages-dev": [
+        {
+            "name": "akeneo/phpspec-skip-example-extension",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akeneo/PhpSpecSkipExampleExtension.git",
+                "reference": "7f10461bcac901f085b07e2106b47b2001d77dd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akeneo/PhpSpecSkipExampleExtension/zipball/7f10461bcac901f085b07e2106b47b2001d77dd2",
+                "reference": "7f10461bcac901f085b07e2106b47b2001d77dd2",
+                "shasum": ""
+            },
+            "require": {
+                "phpspec/phpspec": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev",
+                    "dev-3.0": "3.0.x-dev",
+                    "dev-2.0": "2.0.x-dev",
+                    "dev-1.2": "1.2.x-dev",
+                    "dev-1.1": "1.1.x-dev",
+                    "dev-1.0": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Akeneo": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gildas Quéméner",
+                    "email": "gildas@akeneo.com"
+                },
+                {
+                    "name": "Nicolas Dupont",
+                    "email": "nicolas@akeneo.com"
+                },
+                {
+                    "name": "Kamil Kokot",
+                    "email": "kamil@kokot.me"
+                }
+            ],
+            "description": "Skip your PhpSpec examples through annotations",
+            "time": "2018-11-13T15:00:47+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.1.0",
@@ -1167,6 +1221,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.1"
+    },
     "platform-dev": []
 }

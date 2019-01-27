@@ -13,7 +13,8 @@
         "php": "^7.1"
     },
     "require-dev": {
-        "phpspec/phpspec": "^5.1"
+        "phpspec/phpspec": "^5.1",
+        "akeneo/phpspec-skip-example-extension": "^4.0"
     },
     "config": {
         "bin-dir": "bin"

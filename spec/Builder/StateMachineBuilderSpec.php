@@ -9,6 +9,9 @@ use Rotoscoping\Comedian\Error\MissingImplementation;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+/**
+ * @require Rotoscoping\Comedian\Builder\StateMachineBuilder
+ */
 class StateMachineBuilderSpec extends ObjectBehavior
 {
     function let()
