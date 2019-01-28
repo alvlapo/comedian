@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f38bbd752be4be985986735372674e43",
+    "content-hash": "e8ff8aa8de01681adb3a6dbaf7f63a60",
     "packages": [],
     "packages-dev": [
         {
             "name": "akeneo/phpspec-skip-example-extension",
-            "version": "v4.0.0",
+            "version": "dev-example_node_requirements",
             "source": {
                 "type": "git",
-                "url": "https://github.com/akeneo/PhpSpecSkipExampleExtension.git",
-                "reference": "7f10461bcac901f085b07e2106b47b2001d77dd2"
+                "url": "https://github.com/alvlapo/PhpSpecSkipExampleExtension.git",
+                "reference": "245f1d72be68c345f6ef417beb1c1fba9e77962b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeneo/PhpSpecSkipExampleExtension/zipball/7f10461bcac901f085b07e2106b47b2001d77dd2",
-                "reference": "7f10461bcac901f085b07e2106b47b2001d77dd2",
+                "url": "https://api.github.com/repos/alvlapo/PhpSpecSkipExampleExtension/zipball/245f1d72be68c345f6ef417beb1c1fba9e77962b",
+                "reference": "245f1d72be68c345f6ef417beb1c1fba9e77962b",
                 "shasum": ""
             },
             "require": {
@@ -40,7 +40,6 @@
                     "Akeneo": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -59,7 +58,10 @@
                 }
             ],
             "description": "Skip your PhpSpec examples through annotations",
-            "time": "2018-11-13T15:00:47+00:00"
+            "support": {
+                "source": "https://github.com/alvlapo/PhpSpecSkipExampleExtension/tree/example_node_requirements"
+            },
+            "time": "2019-01-27T17:15:39+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1218,7 +1220,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "akeneo/phpspec-skip-example-extension": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

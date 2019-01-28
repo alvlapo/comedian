@@ -9,12 +9,18 @@
             "email": "alvlapo@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/alvlapo/PhpSpecSkipExampleExtension"
+        }
+    ],
     "require": {
         "php": "^7.1"
     },
     "require-dev": {
         "phpspec/phpspec": "^5.1",
-        "akeneo/phpspec-skip-example-extension": "^4.0"
+        "akeneo/phpspec-skip-example-extension": "dev-example_node_requirements"
     },
     "config": {
         "bin-dir": "bin"
