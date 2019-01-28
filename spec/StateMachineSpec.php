@@ -2,43 +2,45 @@
 
 namespace spec\Rotoscoping\Comedian;
 
+use Prophecy\Argument;
+use PhpSpec\ObjectBehavior;
 use Rotoscoping\Comedian\StateMachine;
-use Rotoscoping\Comedian\Result\OperationResult;
+use Rotoscoping\Comedian\State\StateSet;
+use Rotoscoping\Comedian\State\FinalState;
+use Rotoscoping\Comedian\State\NormalState;
+use Rotoscoping\Comedian\State\InitialState;
 use Rotoscoping\Comedian\Error\ExecutionError;
 use Rotoscoping\Comedian\Context\SimpleContext;
-use Rotoscoping\Comedian\State\StateSet;
-use Rotoscoping\Comedian\Param\Output;
-use Rotoscoping\Comedian\State;
+use Rotoscoping\Comedian\Result\OperationResult;
 use Rotoscoping\Comedian\Operation\Factory as OperationFactory;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * @require Rotoscoping\Comedian\StateMachine
  */
 class StateMachineSpec extends ObjectBehavior
 {
-    function let(SimpleContext $context, StateSet $states)
+    function let()
     {
-        $states->append(
-            SimpleState::initial('draft')
+        $states = new StateSet(
+            (new InitialState('draft'))
                 ->event('submit', 'submitted')
                 ->event('self', 'draft') // not allowed
                 ->event('unknown', function () { return OperationFactory::apply('foobar');}), // unknown state
-            SimpleState::normal('submitted')
+            (new NormalState('submitted'))
                 ->event('reject', 'rejected')
                 ->event('approve', 'processing'),
-            SimpleState::normal('processing')
+            (new NormalState('processing'))
                 ->event('process', 'processing') // self transition
                 ->event('close', 'closed'),
-            SimpleState::finish('rejected')
+            (new FinalState('rejected'))
                 ->event('self', 'close'), // not allowed
-            SimpleState::finish('closed')
+            (new FinalState('closed'))
         );
 
+        $context = new SimpleContext('draft');
         $context->addProperty('owner', 'username');
 
-        $this->beConstructedWith('specName', $context, $states);
+        $this->beConstructedWith('machine', $context, $states);
     }
 
     function it_is_initializable()
@@ -51,26 +53,55 @@ class StateMachineSpec extends ObjectBehavior
         $this->getMachineName()->shouldBeString();
     }
 
+    function it_should_get_context()
+    {
+        $context = new SimpleContext('draft');
+
+        $this->beConstructedWith('machine', $context);
+        $this->getContext()->shouldReturn($context);
+    }
+
+    function it_should_set_context(SimpleContext $context)
+    {
+        $this->setContext($context)->shouldReturnAnInstanceOf(StateMachine::class);
+    }
+
+    function it_should_add_state_to_machine()
+    {
+        $this->addState(new NormalState('processing'))->shouldReturnAnInstanceOf(StateMachine::class);
+    }
+
     function it_should_get_current_state()
     {
-        $this->getStateName()->shouldBeString();
+        $state = new NormalState('idle');
+        $states = new StateSet($state);
+        $context = new SimpleContext('idle');
+
+        $this->beConstructedWith('machine', $context, $states);
+
+        $this->getState()->shouldReturn($state);
     }
 
-    function it_should_get_current_state_type()
-    {
-        $this->getStateType()->shouldBeString();
-    }
-
+    /**
+     * @require Rotoscoping\Comedian\Command\CommandResult
+     */
     function it_should_execute_event_from_state()
     {
         $this->submit()->shouldReturnAnInstanceOf(CommandResult::class);
     }
 
+    /**
+     * @require Rotoscoping\Comedian\Error\ExecutionError
+     */
     function it_should_not_allow_call_unknown_state_handler()
     {
         $this->shouldThrow(ExecutionError::class)->during('close');
     }
 
+    /**
+     * @require Rotoscoping\Comedian\Error\ExecutionError
+     * @require Rotoscoping\Comedian\Command\CommandResult
+     */
     function it_should_not_allow_self_transition_on_start_or_finish_states()
     {
         $this->shouldThrow(ExecutionError::class)->during('self');
@@ -81,6 +112,9 @@ class StateMachineSpec extends ObjectBehavior
         $this->shouldThrow(ExecutionError::class)->during('self');
     }
 
+    /**
+     * @require Rotoscoping\Comedian\Error\ExecutionError
+     */
     function it_should_not_allow_transition_to_unknown_state()
     {
         $this->shouldThrow(ExecutionError::class)->during('unknown');
